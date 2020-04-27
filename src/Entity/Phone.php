@@ -49,7 +49,7 @@ class Phone
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $intenalReference;
+    private $internalReference;
 
 
     public function getId(): ?int
@@ -129,14 +129,14 @@ class Phone
         return $this;
     }
 
-    public function getIntenalReference(): ?string
+    public function getInternalReference(): ?string
     {
-        return $this->intenalReference;
+        return $this->internalReference;
     }
 
-    public function setIntenalReference(string $intenalReference): self
+    public function setInternalReference(string $internalReference): self
     {
-        $this->intenalReference = $intenalReference;
+        $this->internalReference = $internalReference;
 
         return $this;
     }
