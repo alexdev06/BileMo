@@ -17,6 +17,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      fields={"username"}),
  *      message="The username is unavailable!"
  * )
+ * @UniqueEntity(
+ *      fields={"email"}),
+ *      message="The email is unavailable!"
+ * )
  */
 class Client implements UserInterface
 {
