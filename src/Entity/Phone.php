@@ -3,9 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
+ * @UniqueEntity(
+ *      fields={"internalReference"}),
+ *      message="The internal reference number already exists !"
+ * )
  */
 class Phone
 {
@@ -18,36 +25,43 @@ class Phone
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $memory;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $color;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $network;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=10)
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $internalReference;
 
