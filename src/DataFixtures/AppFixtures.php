@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Phone;
+use App\Entity\Client;
+use App\Entity\Customer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -369,6 +371,33 @@ class AppFixtures extends Fixture
             }
         }
  
+        for ($i = 0; $i < 10; $i++) {
+            $client = new Client();
+            $client->setUsername($faker->userName)
+                   ->setPassword('password')
+                   ->setFirstname($faker->firstName)
+                   ->setLastname($faker->lastName)
+                   ->setCompany($faker->company)
+                   ->setEmail($faker->email)
+                   ->setCompany($faker->company)
+                   ->setRegisteredAt($faker->dateTimeThisYear())
+                   ;
+
+            for ($j = 0; $j < 10; $j++) {
+                $customer = new Customer;
+                $customer->setFirstname($faker->firstName)
+                         ->setLastname($faker->lastName)
+                         ->setEmail($faker->email)
+                         ->setPassword($faker->password())
+                         ->setRegisteredAt($faker->dateTimeThisMonth())
+                         ->setClient($client)
+                         ;
+                $manager->persist($customer);
+            }
+
+            $manager->persist($client);
+        }
+
         $manager->flush();
     }
 }
