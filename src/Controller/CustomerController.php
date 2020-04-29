@@ -3,13 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Repository\ClientRepository;
 use App\Repository\CustomerRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class CustomerController extends AbstractController
+class CustomerController extends AbstractFOSRestController
 {
     /**
+     * Return the customers list
+     * 
      * @Rest\Get(
      *      path = "/customers",
      *      name = "customer_list"
@@ -22,6 +29,8 @@ class CustomerController extends AbstractController
     }
 
     /**
+     * Return an unique customer identified by its Id
+     * 
      * @Rest\Get(
      *      path = "/customers/{id}",
      *      name = "customer_show",
@@ -32,5 +41,29 @@ class CustomerController extends AbstractController
     public function show(Customer $customer)
     {
         return $customer;
+    }
+
+    /**
+     * Create a customer entity by deserialization of the request body JSON content
+     * 
+     * @Rest\Post(
+     *      path = "/customers",
+     *      name = "customers_add",
+     *  )
+     * @ParamConverter("customer", converter="fos_rest.request_body")
+     * @Rest\View(statusCode = 201)
+     */
+    public function Add(Customer $customer, EntityManagerInterface $manager, ClientRepository $clientRepository)
+    {
+        $client = $clientRepository->find(21);
+
+        $customer->setClient($client);
+        $customer->setRegisteredAt(new \DateTime());
+        $manager->persist($customer);
+
+        $manager->flush();
+
+        return $this->view($customer, Response::HTTP_CREATED, ['Location' => $this->generateUrl('customer_show', ['id' => $customer->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+    
     }
 }
