@@ -5,6 +5,7 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -25,18 +26,21 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"detail", "list"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"detail", "list"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !")
+     * @Serializer\Groups({"detail", "list"})
      */
     private $email;
 
@@ -49,12 +53,14 @@ class Customer
     /**
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
+     * @Serializer\Groups({"detail"})
      */
     private $registeredAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="customers")
      * @ORM\JoinColumn(nullable=false)
+     * 
      */
     private $client;
 

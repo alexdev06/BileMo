@@ -16,7 +16,10 @@ class PhoneController extends AbstractController
      *      path = "/phones",
      *      name = "phone_list"
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\View(
+     *      statusCode = 200,
+     *      serializerGroups = {"list"}
+     * )
      */
     public function list(PhoneRepository $phoneRepository)
     {
@@ -32,7 +35,10 @@ class PhoneController extends AbstractController
      *      name = "phone_show",
      *      requirements = {"id"="\d+"}
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\View(
+     *      statusCode = 200,
+     *      serializerGroups = {"detail"}
+     * )
      */
     public function show(Phone $phone)
     {
