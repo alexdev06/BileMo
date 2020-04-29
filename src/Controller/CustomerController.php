@@ -44,7 +44,7 @@ class CustomerController extends AbstractFOSRestController
     }
 
     /**
-     * Create a customer entity by deserialization of the request body JSON content
+     * Create a customer entity by deserialization of the request body JSON content. The customer object is saved in database.
      * 
      * @Rest\Post(
      *      path = "/customers",
@@ -65,5 +65,24 @@ class CustomerController extends AbstractFOSRestController
 
         return $this->view($customer, Response::HTTP_CREATED, ['Location' => $this->generateUrl('customer_show', ['id' => $customer->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     
+    }
+
+    /**
+     * Delete a customer entity identified by its Id
+     * 
+     * @Rest\Delete(
+     *      path = "/customers/{id}",
+     *      name = "customer_delete",
+     *      requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(statusCode = 204)
+     */
+    public function delete(Customer $customer, EntityManagerInterface $manager)
+    {
+        $manager->remove($customer);
+        $manager->flush();
+
+        $response = new Response();
+        return $response->setStatusCode(204);
     }
 }
