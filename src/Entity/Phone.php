@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as Serializer;
 
 
 /**
@@ -20,48 +21,56 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"detail", "list"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"detail", "list"})
      */
     private $memory;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"detail", "list"})
      */
     private $color;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=2)
+     * @Serializer\Groups({"detail"})
      */
     private $network;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=10)
+     * @Serializer\Groups({"detail"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank
+     * @Serializer\Groups({"detail", "list"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Serializer\Groups({"detail", "list"})
      */
     private $internalReference;
 

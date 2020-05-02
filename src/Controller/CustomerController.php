@@ -21,7 +21,10 @@ class CustomerController extends AbstractFOSRestController
      *      path = "/customers",
      *      name = "customer_list"
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\View(
+     *      statusCode = 200,
+     *      serializerGroups = {"list"}
+     * )
      */
     public function list(CustomerRepository $customerRepository)
     {
@@ -36,7 +39,10 @@ class CustomerController extends AbstractFOSRestController
      *      name = "customer_show",
      *      requirements = {"id"="\d+"}
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\View(
+     *      statusCode = 200,
+     *      serializerGroups = {"detail"}
+     * )
      */
     public function show(Customer $customer)
     {
