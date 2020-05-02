@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -57,10 +58,15 @@ class CustomerController extends AbstractFOSRestController
      *      name = "customers_add",
      *  )
      * @ParamConverter("customer", converter="fos_rest.request_body")
-     * @Rest\View(statusCode = 201)
+     * @Rest\View(statusCode = 201,
+     *      serializerGroups = {"detail"}
+     * )
      */
-    public function Add(Customer $customer, EntityManagerInterface $manager, ClientRepository $clientRepository)
+    public function Add(Customer $customer, EntityManagerInterface $manager, ClientRepository $clientRepository, ConstraintViolationList $violations)
     {
+        if (count($violations)) {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
         $client = $clientRepository->find(21);
 
         $customer->setClient($client);
