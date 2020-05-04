@@ -25,28 +25,28 @@ class Customer
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"add"})
      * @Serializer\Groups({"detail", "list"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"add"})
      * @Serializer\Groups({"detail", "list"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email(message = "The email value is not a valid email !")
+     * @Assert\Email(message = "The email value is not a valid email !", groups={"add"})
      * @Serializer\Groups({"detail", "list"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"add"})
      */
     private $password;
 
