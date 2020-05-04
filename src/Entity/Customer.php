@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -13,6 +14,36 @@ use JMS\Serializer\Annotation as Serializer;
  *      fields={"email"}),
  *      message="The email is unavailable!"
  * )
+ * 
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "customer_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = "list")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "add",
+ *      href = @Hateoas\Route(
+ *          "customer_add",
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = "list")
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "customer_delete",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = "detail")
+ * )
+ * 
  */
 class Customer
 {

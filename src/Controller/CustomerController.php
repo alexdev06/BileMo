@@ -55,7 +55,7 @@ class CustomerController extends AbstractFOSRestController
      * 
      * @Rest\Post(
      *      path = "/customers",
-     *      name = "customers_add",
+     *      name = "customer_add",
      *  )
      * @ParamConverter("customer",
      *      converter="fos_rest.request_body",

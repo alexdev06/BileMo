@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Hateoas\Configuration\Annotation as Hateoas;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -13,6 +14,16 @@ use JMS\Serializer\Annotation as Serializer;
  * @UniqueEntity(
  *      fields={"internalReference"}),
  *      message="The internal reference number already exists !"
+ * )
+ * 
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "phone_show",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups = "list")
  * )
  */
 class Phone
