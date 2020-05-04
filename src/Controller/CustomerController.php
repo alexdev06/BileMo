@@ -57,7 +57,12 @@ class CustomerController extends AbstractFOSRestController
      *      path = "/customers",
      *      name = "customers_add",
      *  )
-     * @ParamConverter("customer", converter="fos_rest.request_body")
+     * @ParamConverter("customer",
+     *      converter="fos_rest.request_body",
+     *      options={
+     *          "validator"={"groups"="add"}
+     *      }     
+     * )
      * @Rest\View(statusCode = 201,
      *      serializerGroups = {"detail"}
      * )
