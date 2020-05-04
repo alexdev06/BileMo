@@ -13,7 +13,7 @@ class PhoneController extends AbstractController
      * Return the phones list
      * 
      * @Rest\Get(
-     *      path = "/phones",
+     *      path = "/api/phones",
      *      name = "phone_list"
      * )
      * @Rest\View(
@@ -31,7 +31,7 @@ class PhoneController extends AbstractController
      * Return a unique phone identified by Id property
      * 
      * @Rest\Get(
-     *      path = "/phones/{id}",
+     *      path = "/api/phones/{id}",
      *      name = "phone_show",
      *      requirements = {"id"="\d+"}
      * )

@@ -19,7 +19,7 @@ class CustomerController extends AbstractFOSRestController
      * Return the customers list
      * 
      * @Rest\Get(
-     *      path = "/customers",
+     *      path = "/api/customers",
      *      name = "customer_list"
      * )
      * @Rest\View(
@@ -36,7 +36,7 @@ class CustomerController extends AbstractFOSRestController
      * Return an unique customer identified by its Id
      * 
      * @Rest\Get(
-     *      path = "/customers/{id}",
+     *      path = "/api/customers/{id}",
      *      name = "customer_show",
      *      requirements = {"id"="\d+"}
      * )
@@ -54,7 +54,7 @@ class CustomerController extends AbstractFOSRestController
      * Create a customer entity by deserialization of the request body JSON content. The customer object is saved in database.
      * 
      * @Rest\Post(
-     *      path = "/customers",
+     *      path = "/api/customers",
      *      name = "customer_add",
      *  )
      * @ParamConverter("customer",
@@ -88,7 +88,7 @@ class CustomerController extends AbstractFOSRestController
      * Delete a customer entity identified by its Id
      * 
      * @Rest\Delete(
-     *      path = "/customers/{id}",
+     *      path = "/api/customers/{id}",
      *      name = "customer_delete",
      *      requirements = {"id"="\d+"}
      * )
