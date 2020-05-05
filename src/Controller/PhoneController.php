@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Phone;
 use App\Repository\PhoneRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PhoneController extends AbstractController
@@ -20,6 +22,20 @@ class PhoneController extends AbstractController
      *      statusCode = 200,
      *      serializerGroups = {"list"}
      * )
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns phones list",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Phone::class))
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when ressource is not found"
+     * )
+     * @SWG\Tag(name="phones")
      */
     public function list(PhoneRepository $phoneRepository)
     {
@@ -39,6 +55,26 @@ class PhoneController extends AbstractController
      *      statusCode = 200,
      *      serializerGroups = {"detail"}
      * )
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns product details",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Phone::class))
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when ressource is not found"
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="Phone unique identification number"
+     * )
+     * @SWG\Tag(name="phones")
      */
     public function show(Phone $phone)
     {

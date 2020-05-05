@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -51,6 +52,7 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The identifier of a customer")
      */
     private $id;
 
@@ -58,6 +60,7 @@ class Customer
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The firstname of a customer")
      */
     private $firstname;
 
@@ -65,6 +68,7 @@ class Customer
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The lastname of a customer")
      */
     private $lastname;
 
@@ -72,12 +76,14 @@ class Customer
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !", groups={"add"})
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The email address of a customer")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
+     * @SWG\Property(description="The hashed password of the customer")
      */
     private $password;
 
@@ -85,12 +91,14 @@ class Customer
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
      * @Serializer\Groups({"detail"})
+     * @SWG\Property(description="The registration date of a customer")
      */
     private $registeredAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="customers")
      * @ORM\JoinColumn(nullable=false)
+     * @SWG\Property(description="The client owner of a customer")
      * 
      */
     private $client;

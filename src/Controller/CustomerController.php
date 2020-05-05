@@ -12,6 +12,8 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Model;
 
 class CustomerController extends AbstractFOSRestController
 {
@@ -26,6 +28,21 @@ class CustomerController extends AbstractFOSRestController
      *      statusCode = 200,
      *      serializerGroups = {"list"}
      * )
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns customer list",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when ressource is not found"
+     * )
+     * @SWG\Tag(name="customers")
+
      */
     public function list(CustomerRepository $customerRepository)
     {
@@ -44,6 +61,26 @@ class CustomerController extends AbstractFOSRestController
      *      statusCode = 200,
      *      serializerGroups = {"detail"}
      * )
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns customer details",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when ressource is not found"
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="Unique customer identification number"
+     * )
+     * @SWG\Tag(name="customers")
      */
     public function show(Customer $customer)
     {
@@ -66,6 +103,20 @@ class CustomerController extends AbstractFOSRestController
      * @Rest\View(statusCode = 201,
      *      serializerGroups = {"detail"}
      * )
+     * 
+     * @SWG\Response(
+     *     response=201,
+     *     description="Customer ressource created",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when impossible to create the customer ressource. Validation problem mainly"
+     * )
+     * @SWG\Tag(name="customers")
      */
     public function Add(Customer $customer, EntityManagerInterface $manager, ClientRepository $clientRepository, ConstraintViolationList $violations)
     {
@@ -93,6 +144,26 @@ class CustomerController extends AbstractFOSRestController
      *      requirements = {"id"="\d+"}
      * )
      * @Rest\View(statusCode = 204)
+     * 
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="Unique customer identification number"
+     * )
+     * @SWG\Response(
+     *     response=204,
+     *     description="Customer successfully deleted"
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="Returned when the authentified client try to delete a customer who is not linked with"
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Returned when ressource is not found"
+     * )
+     * @SWG\Tag(name="customers")
      */
     public function delete(Customer $customer, EntityManagerInterface $manager)
     {
