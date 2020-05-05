@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Swagger\Annotations as SWG;
 
 
 /**
@@ -32,6 +33,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The identifier of the phone")
      * 
      */
     private $id;
@@ -40,6 +42,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The model name of a phone")
      */
     private $model;
 
@@ -47,6 +50,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The internal memory size of a phone")
      */
     private $memory;
 
@@ -54,6 +58,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The color of a phone")
      */
     private $color;
 
@@ -61,6 +66,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min=2)
      * @Serializer\Groups({"detail"})
+     * @SWG\Property(description="The network bands of a phone")
      */
     private $network;
 
@@ -68,6 +74,7 @@ class Phone
      * @ORM\Column(type="text")
      * @Assert\Length(min=10)
      * @Serializer\Groups({"detail"})
+     * @SWG\Property(description="The description of a phone")
      */
     private $description;
 
@@ -75,6 +82,7 @@ class Phone
      * @ORM\Column(type="float")
      * @Assert\NotBlank
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The Euro price of a phone")
      */
     private $price;
 
@@ -82,6 +90,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Serializer\Groups({"detail", "list"})
+     * @SWG\Property(description="The internal reference of a phone")
      */
     private $internalReference;
 

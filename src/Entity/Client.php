@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Swagger\Annotations as SWG;
 
 
 
@@ -28,12 +29,14 @@ class Client implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The unique identifier of a client.")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Length(min=2)
+     * @SWG\Property(description="The username of a client.")
      */
     private $username;
 
@@ -46,40 +49,47 @@ class Client implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     *      * @SWG\Property(description="The hashed password of a client.")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @SWG\Property(description="The firstname of a client.")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @SWG\Property(description="The lastname of a client.")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @SWG\Property(description="The company of the client.")
      */
     private $company;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !")
+     * @SWG\Property(description="The email of a client.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
+     * @SWG\Property(description="The registration date of a client.")
      */
     private $registeredAt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="client", orphanRemoval=true)
+     * @SWG\Property(description="The customers list owned by a client")
      */
     private $customers;
 

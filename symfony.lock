@@ -90,6 +90,9 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "exsyst/swagger": {
+        "version": "v0.4.1"
+    },
     "friendsofsymfony/rest-bundle": {
         "version": "2.2",
         "recipe": {
@@ -176,6 +179,19 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"
     },
+    "nelmio/api-doc-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
+        },
+        "files": [
+            "./config/packages/nelmio_api_doc.yaml",
+            "./config/routes/nelmio_api_doc.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.4.0"
     },
@@ -187,6 +203,15 @@
     },
     "php": {
         "version": "7.4"
+    },
+    "phpdocumentor/reflection-common": {
+        "version": "2.1.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "5.1.0"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.1.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -208,6 +233,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "symfony/asset": {
+        "version": "v4.4.8"
     },
     "symfony/cache": {
         "version": "v4.4.7"
@@ -335,6 +363,9 @@
     "symfony/property-access": {
         "version": "v4.4.7"
     },
+    "symfony/property-info": {
+        "version": "v4.4.8"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -427,6 +458,9 @@
     "webimpress/safe-writer": {
         "version": "2.0.1"
     },
+    "webmozart/assert": {
+        "version": "1.8.0"
+    },
     "willdurand/hateoas": {
         "version": "3.6.0"
     },
@@ -438,5 +472,8 @@
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"
+    },
+    "zircote/swagger-php": {
+        "version": "2.0.15"
     }
 }
