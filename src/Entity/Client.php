@@ -49,7 +49,7 @@ class Client implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     *      * @SWG\Property(description="The hashed password of a client.")
+     *  @SWG\Property(description="The hashed password of a client.")
      */
     private $password;
 

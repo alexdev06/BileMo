@@ -19,7 +19,7 @@ class SecurityController extends AbstractFOSRestController
 
     /**
      * @Rest\Post(
-     *      path = "/api/clients",
+     *      path = "/api/register",
      *      name = "client_add",
      *  )
      * @ParamConverter(
@@ -29,23 +29,39 @@ class SecurityController extends AbstractFOSRestController
      * @Rest\View(statusCode = 201)
      */
     
-    public function register(Client $client, EntityManagerInterface $entityManager, ConstraintViolationList $violations) 
+    public function register(Client $client, EntityManagerInterface $entityManager, ConstraintViolationList $violations, UserPasswordEncoderInterface $encoder) 
     {
         if (count($violations)) {
             return $this->view($violations, Response::HTTP_BAD_REQUEST);
         }
 
-        $client ->setRegisteredAt(new \DateTime());
-        $client->setRoles($client->getRoles());
+        $client->setRegisteredAt(new \DateTime());
+        $client->setPassword($encoder->encodePassword($client, $client->getPassword()));
 
         $entityManager->persist($client);
         $entityManager->flush();
         
         $data = [
             'status' => 201,
-            'message' => 'Le client a été créé'
+            'message' => 'Client has been created'
         ];
 
         return new JsonResponse($data, 201);
+    }
+
+    /**
+     * @Rest\Post(
+     *      path = "/api/login",
+     *      name = "client_login",
+     * )
+    
+     */
+    public function login(Request $request)
+    {
+        $client = $this->getUser();
+        return $this->json([
+            'username' => $client->getUsername(),
+            'roles' => $client->getRoles()
+        ]);
     }
 }
