@@ -46,7 +46,10 @@ class CustomerController extends AbstractFOSRestController
      */
     public function list(CustomerRepository $customerRepository)
     {
-        return $customerRepository->findAll();
+        $client = $this->getUser();
+        
+        return $customerRepository->findByClient($client);
+        // return $customerRepository->findBy(['client' => $client]);
     }
 
     /**
@@ -84,6 +87,10 @@ class CustomerController extends AbstractFOSRestController
      */
     public function show(Customer $customer)
     {
+        if(!$this->isGranted('MANAGE', $customer)) {
+            throw $this->createAccessDeniedException('No access!');
+        }
+
         return $customer;
     }
 
@@ -123,8 +130,7 @@ class CustomerController extends AbstractFOSRestController
         if (count($violations)) {
             return $this->view($violations, Response::HTTP_BAD_REQUEST);
         }
-        $client = $clientRepository->find(21);
-
+        $client = $this->getUser();
         $customer->setClient($client);
         $customer->setRegisteredAt(new \DateTime());
         $manager->persist($customer);
@@ -167,10 +173,15 @@ class CustomerController extends AbstractFOSRestController
      */
     public function delete(Customer $customer, EntityManagerInterface $manager)
     {
+        if(!$this->isGranted('MANAGE', $customer)) {
+            throw $this->createAccessDeniedException('No access!');
+        }
+
         $manager->remove($customer);
         $manager->flush();
 
         $response = new Response();
+        
         return $response->setStatusCode(204);
     }
 }
