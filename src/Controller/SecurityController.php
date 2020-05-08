@@ -47,7 +47,6 @@ class SecurityController extends AbstractFOSRestController
             return $this->view($violations, Response::HTTP_BAD_REQUEST);
         }
 
-        $client->setRegisteredAt(new \DateTime());
         $client->setPassword($encoder->encodePassword($client, $client->getPassword()));
 
         $entityManager->persist($client);

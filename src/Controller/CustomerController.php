@@ -132,7 +132,6 @@ class CustomerController extends AbstractFOSRestController
         }
         $client = $this->getUser();
         $customer->setClient($client);
-        $customer->setRegisteredAt(new \DateTime());
         $manager->persist($customer);
 
         $manager->flush();

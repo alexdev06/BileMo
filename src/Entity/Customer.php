@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use Hateoas\Configuration\Annotation as Hateoas;
+use Swagger\Annotations as SWG;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -15,6 +15,8 @@ use Swagger\Annotations as SWG;
  *      fields={"email"}),
  *      message="The email is unavailable!"
  * )
+ * 
+ * @ORM\HasLifecycleCallbacks
  * 
  * @Hateoas\Relation(
  *      "self",
@@ -178,5 +180,17 @@ class Customer
         $this->client = $client;
 
         return $this;
+    }
+
+    /** 
+     * Add date to the registeredAt attribut when a customer is created
+     * 
+     * @ORM\PrePersist
+    */
+    public function registrationDate()
+    {
+        if (empty($this->registeredAt)) {
+            $this->registeredAt = new \DateTime();
+        }
     }
 }
