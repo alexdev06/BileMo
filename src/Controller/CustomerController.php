@@ -87,7 +87,7 @@ class CustomerController extends AbstractFOSRestController
      */
     public function show(Customer $customer)
     {
-        if(!$this->isGranted('MANAGE', $customer)) {
+        if (!$this->isGranted('MANAGE', $customer)) {
             throw $this->createAccessDeniedException('No access!');
         }
 
@@ -95,7 +95,7 @@ class CustomerController extends AbstractFOSRestController
     }
 
     /**
-     * Create a customer entity by deserialization of the request body JSON content. The customer object is saved in database.
+     * Create a customer entity by deserialization of the request body JSON content. The customer object is saved in database
      * 
      * @Rest\Post(
      *      path = "/api/customers",
@@ -121,21 +121,20 @@ class CustomerController extends AbstractFOSRestController
      * )
      * @SWG\Response(
      *     response=404,
-     *     description="Returned when impossible to create the customer ressource. Validation problem mainly"
+     *     description="Returned when impossible to create the customer ressource mainly due to validation problem"
      * )
      * @SWG\Tag(name="customers")
      */
-    public function Add(Customer $customer, EntityManagerInterface $manager, ClientRepository $clientRepository, ConstraintViolationList $violations)
+    public function Add(Customer $customer, EntityManagerInterface $entityManager, ConstraintViolationList $violations)
     {
         if (count($violations)) {
             return $this->view($violations, Response::HTTP_BAD_REQUEST);
         }
+
         $client = $this->getUser();
         $customer->setClient($client);
-        $customer->setRegisteredAt(new \DateTime());
-        $manager->persist($customer);
-
-        $manager->flush();
+        $entityManager->persist($customer);
+        $entityManager->flush();
 
         return $this->view($customer, Response::HTTP_CREATED, ['Location' => $this->generateUrl('customer_show', ['id' => $customer->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     
@@ -171,15 +170,14 @@ class CustomerController extends AbstractFOSRestController
      * )
      * @SWG\Tag(name="customers")
      */
-    public function delete(Customer $customer, EntityManagerInterface $manager)
+    public function delete(Customer $customer, EntityManagerInterface $entityManager)
     {
-        if(!$this->isGranted('MANAGE', $customer)) {
+        if (!$this->isGranted('MANAGE', $customer)) {
             throw $this->createAccessDeniedException('No access!');
         }
-
-        $manager->remove($customer);
-        $manager->flush();
-
+        
+        $entityManager->remove($customer);
+        $entityManager->flush();
         $response = new Response();
         
         return $response->setStatusCode(204);

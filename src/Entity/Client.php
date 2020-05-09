@@ -22,6 +22,8 @@ use Swagger\Annotations as SWG;
  *      fields={"email"}),
  *      message="The email is unavailable!"
  * )
+ * 
+ *  @ORM\HasLifecycleCallbacks
  */
 class Client implements UserInterface
 {
@@ -260,5 +262,17 @@ class Client implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Add date to the registeredAt attribut when a client is created
+     * 
+     * @ORM\PrePersist
+     */
+    public function registrationDate()
+    {
+        if (empty($this->registeredAt)) {
+            $this->registeredAt = new \DateTime();
+        }
     }
 }
