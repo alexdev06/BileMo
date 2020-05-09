@@ -48,10 +48,8 @@ class SecurityController extends AbstractFOSRestController
         }
 
         $client->setPassword($encoder->encodePassword($client, $client->getPassword()));
-
         $entityManager->persist($client);
         $entityManager->flush();
-        
         $data = [
             'status' => 201,
             'message' => 'Client has been created'
@@ -82,6 +80,7 @@ class SecurityController extends AbstractFOSRestController
     public function login(Request $request)
     {
         $client = $this->getUser();
+        
         return $this->json([
             'username' => $client->getUsername(),
             'roles' => $client->getRoles()
