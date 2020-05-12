@@ -42,7 +42,6 @@ class CustomerController extends AbstractFOSRestController
      *     description="Returned when ressource is not found"
      * )
      * @SWG\Tag(name="customers")
-
      */
     public function list(CustomerRepository $customerRepository)
     {

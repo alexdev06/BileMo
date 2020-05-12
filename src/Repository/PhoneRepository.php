@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Phone;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Pagerfanta\Pagerfanta;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use App\Representation\PaginatedCollection;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Phone|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +20,15 @@ class PhoneRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Phone::class);
+    }
+
+    public function qb()
+    {
+        $qb = $this->createQueryBuilder('p')
+                    ->orderBy('p.model','asc')
+                    ;
+
+        return $qb;
     }
 
     // /**

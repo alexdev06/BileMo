@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Phone;
-use App\Repository\PhoneRepository;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Swagger\Annotations as SWG;
+use App\Repository\PhoneRepository;
+use App\Representation\PaginatedCollection;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PhoneController extends AbstractController
@@ -17,6 +21,12 @@ class PhoneController extends AbstractController
      * @Rest\Get(
      *      path = "/api/phones",
      *      name = "phone_list"
+     * )
+     * @Rest\QueryParam(
+     *      name="page",
+     *      requirements="\d+",
+     *      nullable=true,
+     *      description="The page"
      * )
      * @Rest\View(
      *      statusCode = 200,
@@ -37,13 +47,42 @@ class PhoneController extends AbstractController
      * )
      * @SWG\Tag(name="phones")
      */
-    public function list(PhoneRepository $phoneRepository)
+    public function list(PhoneRepository $phoneRepository, Request $request)
     {
-        return $phoneRepository->findAll();
+        $page = $request->query->get('page', 1);
+        $qb = $phoneRepository->qb();
+        $adapter = new DoctrineORMAdapter($qb);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(5);
+        $pagerfanta->setCurrentPage($page);
+        $phones = [];
+        foreach ($pagerfanta->getCurrentPageResults() as $result) {
+            $phones[] = $result;
+        }
+
+        $route = 'phone_list';
+        $routeParams = array();
+        $createLinkUrl = function($targetPage) use ($route, $routeParams) {
+            return $this->generateUrl($route, array_merge(
+                $routeParams,
+                array('page' => $targetPage)
+            ));
+        };
+        $paginatedCollection = new PaginatedCollection($phones, $pagerfanta->getNbResults());
+        $paginatedCollection->addLink('self', $createLinkUrl($page));
+        $paginatedCollection->addLink('first', $createLinkUrl(1));
+        $paginatedCollection->addLink('last', $createLinkUrl($pagerfanta->getNbPages()));
+        if ($pagerfanta->hasNextPage()) {
+            $paginatedCollection->addLink('next', $createLinkUrl($pagerfanta->getNextPage()));
+        }
+        if ($pagerfanta->hasPreviousPage()) {
+            $paginatedCollection->addLink('prev', $createLinkUrl($pagerfanta->getPreviousPage()));
+        }
+
+        return $paginatedCollection;
     }
 
     /**
-     * 
      * Return a unique phone identified by Id property
      * 
      * @Rest\Get(
