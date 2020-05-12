@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Representation;
+namespace App\Pagination;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation as Serializer;
 
+/**
+ *  Represents a collection of paginated items with additionnal navigation links 
+ */
 class PaginatedCollection
 {
 
     /**
-     * @Type("array<App\Entity\Phone>")
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"list"})
      */
     private $items;
     /**
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"list"})
      */
     private $total;
     /**
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({list"})
      */
     private $count;
         /**
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"list"})
      */
     private $links = [];
 

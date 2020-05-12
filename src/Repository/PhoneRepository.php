@@ -3,10 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Phone;
-use Pagerfanta\Pagerfanta;
 use Doctrine\Persistence\ManagerRegistry;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use App\Representation\PaginatedCollection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
