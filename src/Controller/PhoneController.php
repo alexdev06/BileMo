@@ -25,7 +25,7 @@ class PhoneController extends AbstractController
      *      name="page",
      *      requirements="\d+",
      *      nullable=true,
-     *      description="The page"
+     *      description="The actual paginated page of phone list"
      * )
      * @Rest\View(
      *      statusCode = 200,

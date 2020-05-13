@@ -25,6 +25,12 @@ class CustomerController extends AbstractFOSRestController
      *      path = "/api/customers",
      *      name = "customer_list"
      * )
+     * @Rest\QueryParam(
+     *      name="page",
+     *      requirements="\d+",
+     *      nullable=true,
+     *      description="The actual paginated page of customer list"
+     * )
      * @Rest\View(
      *      statusCode = 200,
      *      serializerGroups = {"list"}
