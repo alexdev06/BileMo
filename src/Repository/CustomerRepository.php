@@ -19,6 +19,15 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
+    public function qb()
+    {
+        $qb = $this->createQueryBuilder('c')
+                    ->orderBy('c.lastname','asc')
+                    ;
+
+        return $qb;
+    }
+
     // /**
     //  * @return Customer[] Returns an array of Customer objects
     //  */

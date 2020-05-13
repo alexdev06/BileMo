@@ -2,7 +2,6 @@
 
 namespace App\Pagination;
 
-use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -10,20 +9,22 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class PaginatedCollection
 {
-
     /**
      * @Serializer\Groups({"list"})
      */
     private $items;
+
     /**
      * @Serializer\Groups({"list"})
      */
     private $total;
+
     /**
-     * @Serializer\Groups({list"})
+     * @Serializer\Groups({"list"})
      */
     private $count;
-        /**
+
+    /**
      * @Serializer\Groups({"list"})
      */
     private $links = [];
@@ -39,7 +40,4 @@ class PaginatedCollection
     {
         $this->links[$ref] = $url;
     }
-
-
-
 }

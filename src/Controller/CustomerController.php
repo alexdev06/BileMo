@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
-use App\Repository\ClientRepository;
+use App\Pagination\PaginationFactory;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends AbstractFOSRestController
 {
@@ -43,12 +44,12 @@ class CustomerController extends AbstractFOSRestController
      * )
      * @SWG\Tag(name="customers")
      */
-    public function list(CustomerRepository $customerRepository)
+    public function list(CustomerRepository $customerRepository, Request $request, PaginationFactory $paginationFactory)
     {
-        $client = $this->getUser();
-        
-        return $customerRepository->findByClient($client);
-        // return $customerRepository->findBy(['client' => $client]);
+        $qb = $customerRepository->qb();
+        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'customer_list');
+
+        return $paginatedCollection;
     }
 
     /**
