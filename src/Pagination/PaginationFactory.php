@@ -27,12 +27,13 @@ class PaginationFactory
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(5);
         $pagerfanta->setCurrentPage($page);
-        $phones = [];
+        $items = [];
         foreach ($pagerfanta->getCurrentPageResults() as $result) {
-            $phones[] = $result;
+            $items[] = $result;
         }
 
-        $paginatedCollection = new PaginatedCollection($phones, $pagerfanta->getNbResults());
+        $paginatedCollection = new PaginatedCollection($items, $pagerfanta->getNbResults());
+        $routeParams = array_merge($routeParams, $request->query->all());
         $createLinkUrl = function($targetPage) use ($route, $routeParams) {
             return $this->router->generate($route, array_merge(
                 $routeParams,

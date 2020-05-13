@@ -31,6 +31,12 @@ class CustomerController extends AbstractFOSRestController
      *      nullable=true,
      *      description="The actual paginated page of customer list"
      * )
+     * @Rest\QueryParam(
+     *      name="filter",
+     *      requirements="[a-zA-Z0-9]+",
+     *      nullable=true,
+     *      description="The keyword lastname filter"
+     * )
      * @Rest\View(
      *      statusCode = 200,
      *      serializerGroups = {"list"}
@@ -52,7 +58,8 @@ class CustomerController extends AbstractFOSRestController
      */
     public function list(CustomerRepository $customerRepository, Request $request, PaginationFactory $paginationFactory)
     {
-        $qb = $customerRepository->qb();
+        $filter = $request->query->get('filter');
+        $qb = $customerRepository->qb($filter);
         $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'customer_list');
 
         return $paginatedCollection;
