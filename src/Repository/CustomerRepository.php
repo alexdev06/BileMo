@@ -19,14 +19,16 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
-    public function qb($filter = '')
+    public function qb($client, $filter = '')
     {
         $qb = $this->createQueryBuilder('c')
                     ->orderBy('c.lastname','asc')
+                    ->andWhere('c.client = :client')
+                        ->setParameter('client', $client);
         ;
         if ($filter) {
             $qb->andWhere('c.lastname LIKE :filter')
-               ->setParameter('filter', '%'.$filter.'%');
+                    ->setParameter('filter', '%'.$filter.'%');
         }
         
         return $qb;
