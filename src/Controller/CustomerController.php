@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
-use App\Repository\ClientRepository;
+use App\Pagination\PaginationFactory;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends AbstractFOSRestController
 {
@@ -23,6 +24,18 @@ class CustomerController extends AbstractFOSRestController
      * @Rest\Get(
      *      path = "/api/customers",
      *      name = "customer_list"
+     * )
+     * @Rest\QueryParam(
+     *      name="page",
+     *      requirements="\d+",
+     *      nullable=true,
+     *      description="The actual paginated page of customer list"
+     * )
+     * @Rest\QueryParam(
+     *      name="filter",
+     *      requirements="[a-zA-Z0-9]+",
+     *      nullable=true,
+     *      description="The keyword lastname filter"
      * )
      * @Rest\View(
      *      statusCode = 200,
@@ -42,14 +55,15 @@ class CustomerController extends AbstractFOSRestController
      *     description="Returned when ressource is not found"
      * )
      * @SWG\Tag(name="customers")
-
      */
-    public function list(CustomerRepository $customerRepository)
+    public function list(CustomerRepository $customerRepository, Request $request, PaginationFactory $paginationFactory)
     {
+        $filter = $request->query->get('filter');
         $client = $this->getUser();
-        
-        return $customerRepository->findByClient($client);
-        // return $customerRepository->findBy(['client' => $client]);
+        $qb = $customerRepository->qb($client, $filter);
+        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'customer_list');
+
+        return $paginatedCollection;
     }
 
     /**

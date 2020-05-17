@@ -17,6 +17,9 @@ security:
         registration:
             pattern: ^/api/register
             security: false
+        documentation:
+            pattern: ^/api/doc
+            security: false
         login:
             pattern: ^/api/login
             stateless: true

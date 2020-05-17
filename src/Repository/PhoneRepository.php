@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Phone;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Phone|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +17,19 @@ class PhoneRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Phone::class);
+    }
+
+    public function qb($filter = '')
+    {
+        $qb = $this->createQueryBuilder('p')
+                   ->orderBy('p.model','asc')
+        ;
+        if ($filter) {
+            $qb->andWhere('p.model LIKE :filter')
+               ->setParameter('filter', '%'.$filter.'%');
+        }
+        
+        return $qb;
     }
 
     // /**

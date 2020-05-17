@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Phone;
-use App\Repository\PhoneRepository;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Swagger\Annotations as SWG;
+use App\Repository\PhoneRepository;
+use App\Pagination\PaginationFactory;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PhoneController extends AbstractController
@@ -17,6 +19,18 @@ class PhoneController extends AbstractController
      * @Rest\Get(
      *      path = "/api/phones",
      *      name = "phone_list"
+     * )
+     * @Rest\QueryParam(
+     *      name="page",
+     *      requirements="\d+",
+     *      nullable=true,
+     *      description="The actual paginated page of phone list"
+     * )
+     * @Rest\QueryParam(
+     *      name="filter",
+     *      requirements="[a-zA-Z0-9]+",
+     *      nullable=true,
+     *      description="The keyword model filter"
      * )
      * @Rest\View(
      *      statusCode = 200,
@@ -37,13 +51,16 @@ class PhoneController extends AbstractController
      * )
      * @SWG\Tag(name="phones")
      */
-    public function list(PhoneRepository $phoneRepository)
+    public function list(PhoneRepository $phoneRepository, Request $request, PaginationFactory $paginationFactory)
     {
-        return $phoneRepository->findAll();
+        $filter = $request->query->get('filter');
+        $qb = $phoneRepository->qb($filter);
+        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'phone_list');
+
+        return $paginatedCollection;
     }
 
     /**
-     * 
      * Return a unique phone identified by Id property
      * 
      * @Rest\Get(
