@@ -3,18 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use Swagger\Annotations as SWG;
 use App\Pagination\PaginationFactory;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\Request;
+use App\Exception\ResourceValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Swagger\Annotations as SWG;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends AbstractFOSRestController
 {
@@ -88,6 +89,10 @@ class CustomerController extends AbstractFOSRestController
      *     )
      * )
      * @SWG\Response(
+     *     response=403,
+     *     description="Returned when the authentified client try to show a customer who is not linked with"
+     * )
+     * @SWG\Response(
      *     response=404,
      *     description="Returned when ressource is not found"
      * )
@@ -102,7 +107,7 @@ class CustomerController extends AbstractFOSRestController
     public function show(Customer $customer)
     {
         if (!$this->isGranted('MANAGE', $customer)) {
-            throw $this->createAccessDeniedException('No access!');
+            throw $this->createAccessDeniedException('You are not authorized to access to this customer !');
         }
 
         return $customer;
@@ -134,7 +139,7 @@ class CustomerController extends AbstractFOSRestController
      *     )
      * )
      * @SWG\Response(
-     *     response=404,
+     *     response=400,
      *     description="Returned when impossible to create the customer ressource mainly due to validation problem"
      * )
      * @SWG\Tag(name="customers")
@@ -142,7 +147,12 @@ class CustomerController extends AbstractFOSRestController
     public function Add(Customer $customer, EntityManagerInterface $entityManager, ConstraintViolationList $violations)
     {
         if (count($violations)) {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            foreach ($violations as $violation) {
+                $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
+            }
+
+            throw new ResourceValidationException($message);
         }
 
         $client = $this->getUser();
@@ -187,7 +197,7 @@ class CustomerController extends AbstractFOSRestController
     public function delete(Customer $customer, EntityManagerInterface $entityManager)
     {
         if (!$this->isGranted('MANAGE', $customer)) {
-            throw $this->createAccessDeniedException('No access!');
+            throw $this->createAccessDeniedException('Your are not authorized to delete this customer!');
         }
         
         $entityManager->remove($customer);
