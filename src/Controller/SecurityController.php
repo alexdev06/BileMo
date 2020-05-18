@@ -3,17 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use Swagger\Annotations as SWG;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Exception\ResourceValidationException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Swagger\Annotations as SWG;
-use Nelmio\ApiDocBundle\Annotation\Model;
 
 class SecurityController extends AbstractFOSRestController
 {
@@ -44,7 +44,12 @@ class SecurityController extends AbstractFOSRestController
     public function register(Client $client, EntityManagerInterface $entityManager, ConstraintViolationList $violations, UserPasswordEncoderInterface $encoder) 
     {
         if (count($violations)) {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            foreach ($violations as $violation) {
+                $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
+            }
+
+            throw new ResourceValidationException($message);
         }
 
         $client->setPassword($encoder->encodePassword($client, $client->getPassword()));
