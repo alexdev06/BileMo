@@ -9,6 +9,7 @@ use App\Pagination\PaginationFactory;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PhoneController extends AbstractController
@@ -36,6 +37,8 @@ class PhoneController extends AbstractController
      *      statusCode = 200,
      *      serializerGroups = {"list"}
      * )
+     * 
+     * @Cache(expires="+10 minutes")
      * 
      * @SWG\Response(
      *     response=200,
@@ -72,6 +75,8 @@ class PhoneController extends AbstractController
      *      statusCode = 200,
      *      serializerGroups = {"detail"}
      * )
+     * 
+     * @Cache(expires="+10 minutes")
      * 
      * @SWG\Response(
      *     response=200,

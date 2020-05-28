@@ -43,6 +43,8 @@ class CustomerController extends AbstractFOSRestController
      *      serializerGroups = {"list"}
      * )
      * 
+     * @Cache(expires="+10 minutes")
+     * 
      * @SWG\Response(
      *     response=200,
      *     description="Returns customer list",
@@ -79,6 +81,8 @@ class CustomerController extends AbstractFOSRestController
      *      statusCode = 200,
      *      serializerGroups = {"detail"}
      * )
+     * 
+     * @Cache(expires="+10 minutes")
      * 
      * @SWG\Response(
      *     response=200,
