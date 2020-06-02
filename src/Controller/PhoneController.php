@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PhoneController extends AbstractController
 {
     /**
-     * Return the phones list
+     * Returns the phones list
      * 
      * @Rest\Get(
      *      path = "/api/phones",
@@ -42,7 +42,7 @@ class PhoneController extends AbstractController
      * 
      * @SWG\Response(
      *     response=200,
-     *     description="Returns phones list",
+     *     description="Returned with phones list",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Phone::class))
@@ -64,7 +64,7 @@ class PhoneController extends AbstractController
     }
 
     /**
-     * Return a unique phone identified by Id property
+     * Returns an unique phone details identified by Id property
      * 
      * @Rest\Get(
      *      path = "/api/phones/{id}",
@@ -80,7 +80,7 @@ class PhoneController extends AbstractController
      * 
      * @SWG\Response(
      *     response=200,
-     *     description="Returns product details",
+     *     description="Returned with product details",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Phone::class))

@@ -11,6 +11,8 @@ use Swagger\Annotations as SWG;
 
 
 /**
+ *  Represents a phone product listed in API database
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\PhoneRepository")
  * @UniqueEntity(
  *      fields={"internalReference"}),
@@ -33,7 +35,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @SWG\Property(description="The identifier of the phone")
+     * @SWG\Property(description="The identifier of a phone")
      * 
      */
     private $id;

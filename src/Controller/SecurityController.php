@@ -19,7 +19,7 @@ class SecurityController extends AbstractFOSRestController
 {
 
     /**
-     *  To register an user as client of the API
+     *  Registers an user as client of the API
      *  
      * @Rest\Post(
      *      path = "/api/register",
@@ -64,7 +64,7 @@ class SecurityController extends AbstractFOSRestController
     }
 
     /**
-     *  To authenticate a registered client
+     *  Authenticates a registered client
      * 
      * @Rest\Post(
      *      path = "/api/login",
@@ -77,7 +77,7 @@ class SecurityController extends AbstractFOSRestController
      * )
      * @SWG\Response(
      *     response=200,
-     *     description="Returns a token when authentication request is successfull"
+     *     description="Returned with a token when authentication request has been successfull"
      * )
      * @SWG\Tag(name="security")
      *

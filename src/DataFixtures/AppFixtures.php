@@ -8,9 +8,17 @@ use App\Entity\Client;
 use App\Entity\Customer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+    
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr-FR');
@@ -372,9 +380,10 @@ class AppFixtures extends Fixture
         }
  
         for ($i = 0; $i < 10; $i++) {
+            $encoder = $this->encoder;
             $client = new Client();
             $client->setUsername($faker->userName)
-                   ->setPassword('password')
+                   ->setPassword($encoder->encodePassword($client, 'password'))
                    ->setFirstname($faker->firstName)
                    ->setLastname($faker->lastName)
                    ->setCompany($faker->company)
