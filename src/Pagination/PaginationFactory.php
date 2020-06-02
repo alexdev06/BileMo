@@ -20,10 +20,10 @@ class PaginationFactory
         $this->router = $router;
     }
 
-    public function createCollection(Request $request, QueryBuilder $qb, $route, $routeParams = array())
+    public function createCollection(Request $request, QueryBuilder $queryB, $route, $routeParams = array())
     {
         $page = $request->query->get('page', 1);
-        $adapter = new DoctrineORMAdapter($qb);
+        $adapter = new DoctrineORMAdapter($queryB);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(5);
         $pagerfanta->setCurrentPage($page);

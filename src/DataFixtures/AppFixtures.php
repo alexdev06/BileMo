@@ -8,12 +8,22 @@ use App\Entity\Client;
 use App\Entity\Customer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    private $faker;
+    
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+        $this->faker = Factory::create('fr-FR');
+    }
+    
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create('fr-FR');
+        $faker = $this->faker;
         
         $listPhones = [
             
@@ -372,9 +382,10 @@ class AppFixtures extends Fixture
         }
  
         for ($i = 0; $i < 10; $i++) {
+            $encoder = $this->encoder;
             $client = new Client();
             $client->setUsername($faker->userName)
-                   ->setPassword('password')
+                   ->setPassword($encoder->encodePassword($client, 'password'))
                    ->setFirstname($faker->firstName)
                    ->setLastname($faker->lastName)
                    ->setCompany($faker->company)
@@ -392,6 +403,7 @@ class AppFixtures extends Fixture
                          ->setRegisteredAt($faker->dateTimeThisMonth())
                          ->setClient($client)
                          ;
+                         
                 $manager->persist($customer);
             }
 

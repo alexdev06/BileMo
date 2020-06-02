@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ *  Represents a customer of the client application
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  * @UniqueEntity(
  *      fields={"email"}),

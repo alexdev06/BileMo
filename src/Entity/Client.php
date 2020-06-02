@@ -13,6 +13,8 @@ use Swagger\Annotations as SWG;
 
 
 /**
+ *  Represents an entity which interracts with the API as an user
+ * 
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @UniqueEntity(
  *      fields={"username"}),
@@ -31,19 +33,20 @@ class Client implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @SWG\Property(description="The unique identifier of a client.")
+     * @SWG\Property(description="The unique identifier of a client")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Length(min=2)
-     * @SWG\Property(description="The username of a client.")
+     * @SWG\Property(description="The username of a client")
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @SWG\Property(description="The authorization rights of a client. ROLE_USER by default")
      */
     private $roles = [];
 
@@ -51,21 +54,21 @@ class Client implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     *  @SWG\Property(description="The hashed password of a client.")
+     *  @SWG\Property(description="The hashed password of a client")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @SWG\Property(description="The firstname of a client.")
+     * @SWG\Property(description="The firstname of a client")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @SWG\Property(description="The lastname of a client.")
+     * @SWG\Property(description="The lastname of a client")
      */
     private $lastname;
 
@@ -78,14 +81,14 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !")
-     * @SWG\Property(description="The email of a client.")
+     * @SWG\Property(description="The email of a client")
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\DateTime()
-     * @SWG\Property(description="The registration date of a client.")
+     * @SWG\Property(description="The registration date of a client")
      */
     private $registeredAt;
 

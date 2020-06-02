@@ -14,13 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class CustomerController extends AbstractFOSRestController
 {
     /**
-     * Return the customers list
+     * Returns the customers list
      * 
      * @Rest\Get(
      *      path = "/api/customers",
@@ -47,7 +48,7 @@ class CustomerController extends AbstractFOSRestController
      * 
      * @SWG\Response(
      *     response=200,
-     *     description="Returns customer list",
+     *     description="Returned with the customer list",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Customer::class))
@@ -63,14 +64,14 @@ class CustomerController extends AbstractFOSRestController
     {
         $filter = $request->query->get('filter');
         $client = $this->getUser();
-        $qb = $customerRepository->qb($client, $filter);
-        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'customer_list');
+        $queryB = $customerRepository->queryB($client, $filter);
+        $paginatedCollection = $paginationFactory->createCollection($request, $queryB, 'customer_list');
 
         return $paginatedCollection;
     }
 
     /**
-     * Return an unique customer identified by its Id
+     * Returns an unique customer details identified by its Id
      * 
      * @Rest\Get(
      *      path = "/api/customers/{id}",
@@ -118,7 +119,7 @@ class CustomerController extends AbstractFOSRestController
     }
 
     /**
-     * Create a customer entity by deserialization of the request body JSON content. The customer object is saved in database
+     * Creates a customer entity by deserialization of the request body JSON content. The customer object is saved in database
      * 
      * @Rest\Post(
      *      path = "/api/customers",
@@ -136,7 +137,7 @@ class CustomerController extends AbstractFOSRestController
      * 
      * @SWG\Response(
      *     response=201,
-     *     description="Customer ressource created",
+     *     description="Returned when a Customer ressource has been created",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Customer::class))
@@ -169,7 +170,7 @@ class CustomerController extends AbstractFOSRestController
     }
 
     /**
-     * Delete a customer entity identified by its Id
+     * Deletes a customer entity identified by its Id
      * 
      * @Rest\Delete(
      *      path = "/api/customers/{id}",
@@ -186,7 +187,7 @@ class CustomerController extends AbstractFOSRestController
      * )
      * @SWG\Response(
      *     response=204,
-     *     description="Customer successfully deleted"
+     *     description="Returned when a Customer has been successfully deleted"
      * )
      * @SWG\Response(
      *     response=403,
