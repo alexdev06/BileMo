@@ -57,8 +57,8 @@ class PhoneController extends AbstractController
     public function list(PhoneRepository $phoneRepository, Request $request, PaginationFactory $paginationFactory)
     {
         $filter = $request->query->get('filter');
-        $qb = $phoneRepository->queryB($filter);
-        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'phone_list');
+        $queryB = $phoneRepository->queryB($filter);
+        $paginatedCollection = $paginationFactory->createCollection($request, $queryB, 'phone_list');
 
         return $paginatedCollection;
     }
