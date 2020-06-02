@@ -13,15 +13,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AppFixtures extends Fixture
 {
     private $encoder;
+    private $faker;
     
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
+        $this->faker = Factory::create('fr-FR');
     }
     
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create('fr-FR');
+        $faker = $this->faker;
         
         $listPhones = [
             
@@ -401,6 +403,7 @@ class AppFixtures extends Fixture
                          ->setRegisteredAt($faker->dateTimeThisMonth())
                          ->setClient($client)
                          ;
+                         
                 $manager->persist($customer);
             }
 
