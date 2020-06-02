@@ -19,17 +19,17 @@ class PhoneRepository extends ServiceEntityRepository
         parent::__construct($registry, Phone::class);
     }
 
-    public function qb($filter = '')
+    public function queryB($filter = '')
     {
-        $qb = $this->createQueryBuilder('p')
+        $queryB = $this->createQueryBuilder('p')
                    ->orderBy('p.model','asc')
         ;
         if ($filter) {
-            $qb->andWhere('p.model LIKE :filter')
+            $queryB->andWhere('p.model LIKE :filter')
                ->setParameter('filter', '%'.$filter.'%');
         }
         
-        return $qb;
+        return $queryB;
     }
 
     // /**

@@ -64,8 +64,8 @@ class CustomerController extends AbstractFOSRestController
     {
         $filter = $request->query->get('filter');
         $client = $this->getUser();
-        $qb = $customerRepository->qb($client, $filter);
-        $paginatedCollection = $paginationFactory->createCollection($request, $qb, 'customer_list');
+        $queryB = $customerRepository->queryB($client, $filter);
+        $paginatedCollection = $paginationFactory->createCollection($request, $queryB, 'customer_list');
 
         return $paginatedCollection;
     }
