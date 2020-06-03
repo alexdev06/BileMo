@@ -63,7 +63,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"detail", "list","add"})
      * @SWG\Property(description="The firstname of a customer")
      */
     private $firstname;
@@ -71,7 +71,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"detail", "list","add"})
      * @SWG\Property(description="The lastname of a customer")
      */
     private $lastname;
@@ -79,7 +79,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !", groups={"add"})
-     * @Serializer\Groups({"detail", "list"})
+     * @Serializer\Groups({"detail", "list", "add"})
      * @SWG\Property(description="The email address of a customer")
      */
     private $email;
@@ -87,6 +87,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
+     * @Serializer\Groups("add")
      * @SWG\Property(description="The hashed password of the customer")
      */
     private $password;

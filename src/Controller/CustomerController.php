@@ -140,12 +140,18 @@ class CustomerController extends AbstractFOSRestController
      *     description="Returned when a Customer ressource has been created",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *         @SWG\Items(ref=@Model(type=Customer::class, groups={"detail"}))
      *     )
      * )
      * @SWG\Response(
      *     response=400,
      *     description="Returned when impossible to create the customer ressource mainly due to validation problem"
+     * )
+     * @SWG\Parameter(
+     *     name="Customer",
+     *     in="body",
+     *     required=true,
+     *     @Model(type=Customer::class, groups={"add"})
      * )
      * @SWG\Tag(name="customers")
      */
