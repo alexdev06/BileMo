@@ -49,9 +49,7 @@ class CustomerController extends AbstractFOSRestController
      * @SWG\Response(
      *     response=200,
      *     description="Returned with the customer list",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *     @Model(type=Customer::class, groups={"list"})
      *     )
      * )
      * @SWG\Response(
@@ -87,10 +85,8 @@ class CustomerController extends AbstractFOSRestController
      * 
      * @SWG\Response(
      *     response=200,
-     *     description="Returns customer details",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Customer::class))
+     *     description="Returned with customer details",
+     *     @Model(type=Customer::class, groups={"detail"}))
      *     )
      * )
      * @SWG\Response(
@@ -138,9 +134,7 @@ class CustomerController extends AbstractFOSRestController
      * @SWG\Response(
      *     response=201,
      *     description="Returned when a Customer ressource has been created",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Customer::class, groups={"detail"}))
+     *     @Model(type=Customer::class, groups={"detail"}))
      *     )
      * )
      * @SWG\Response(
@@ -148,7 +142,7 @@ class CustomerController extends AbstractFOSRestController
      *     description="Returned when impossible to create the customer ressource mainly due to validation problem"
      * )
      * @SWG\Parameter(
-     *     name="Customer",
+     *     name="datas",
      *     in="body",
      *     required=true,
      *     @Model(type=Customer::class, groups={"add"})

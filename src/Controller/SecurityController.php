@@ -79,6 +79,12 @@ class SecurityController extends AbstractFOSRestController
      *     response=200,
      *     description="Returned with a token when authentication request has been successfull"
      * )
+     *  @SWG\Parameter(
+     *     name="datas",
+     *     in="body",
+     *     required=true,
+     *     @Model(type=Client::class, groups={"login"})
+     * )
      * @SWG\Tag(name="security")
      *
      */

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Swagger\Annotations as SWG;
-
+use JMS\Serializer\Annotation as Serializer;
 
 
 /**
@@ -40,6 +40,7 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Length(min=2)
+     * @Serializer\Groups({"login"})
      * @SWG\Property(description="The username of a client")
      */
     private $username;
@@ -54,7 +55,8 @@ class Client implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     *  @SWG\Property(description="The hashed password of a client")
+     * @Serializer\Groups({"login"})
+     * @SWG\Property(description="The hashed password of a client")
      */
     private $password;
 
