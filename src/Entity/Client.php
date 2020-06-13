@@ -40,7 +40,7 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Length(min=2)
-     * @Serializer\Groups({"login"})
+     * @Serializer\Groups({"login", "add"})
      * @SWG\Property(description="The username of a client")
      */
     private $username;
@@ -55,7 +55,7 @@ class Client implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     * @Serializer\Groups({"login"})
+     * @Serializer\Groups({"login", "add"})
      * @SWG\Property(description="The hashed password of a client")
      */
     private $password;
@@ -63,6 +63,7 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"add"})
      * @SWG\Property(description="The firstname of a client")
      */
     private $firstname;
@@ -70,12 +71,14 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Serializer\Groups({"add"})
      * @SWG\Property(description="The lastname of a client")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Groups({"add"})
      * @SWG\Property(description="The company of the client.")
      */
     private $company;
@@ -83,6 +86,7 @@ class Client implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message = "The email value is not a valid email !")
+     * @Serializer\Groups({"add"})
      * @SWG\Property(description="The email of a client")
      */
     private $email;

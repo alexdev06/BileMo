@@ -39,6 +39,12 @@ class SecurityController extends AbstractFOSRestController
      *     response=201,
      *     description="Returned when a client ressource has been created"
      * )
+     * @SWG\Parameter(
+     *     name="datas",
+     *     in="body",
+     *     required=true,
+     *     @Model(type=Client::class, groups={"add"})
+     * )
      * @SWG\Tag(name="security")
      */
     public function register(Client $client, EntityManagerInterface $entityManager, ConstraintViolationList $violations, UserPasswordEncoderInterface $encoder) 

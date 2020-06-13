@@ -36,7 +36,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "customer_add",
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = "list")
+ *      exclusion = @Hateoas\Exclusion(groups = {"list", "detail"})
  * )
  * 
  * @Hateoas\Relation(
@@ -46,7 +46,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
- *      exclusion = @Hateoas\Exclusion(groups = "detail")
+ *      exclusion = @Hateoas\Exclusion(groups = {"list", "detail"})
  * )
  * 
  */
@@ -56,6 +56,7 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"detail", "list"})
      * @SWG\Property(description="The identifier of a customer")
      */
     private $id;
@@ -63,7 +64,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
-     * @Serializer\Groups({"detail", "list","add"})
+     * @Serializer\Groups({"detail", "list", "add"})
      * @SWG\Property(description="The firstname of a customer")
      */
     private $firstname;
@@ -71,7 +72,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(groups={"add"})
-     * @Serializer\Groups({"detail", "list","add"})
+     * @Serializer\Groups({"detail", "list", "add"})
      * @SWG\Property(description="The lastname of a customer")
      */
     private $lastname;
