@@ -4,6 +4,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6fd3074c86ea425eb6d449e3ac83a3e3)](https://www.codacy.com/manual/alexdev06/BileMo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexdev06/BileMo&amp;utm_campaign=Badge_Grade)
 
 ### Lien vers la page de connexion de l'API : https://bilemo.alexandremanteaux.fr/api/login
+### Lien vers la documentation de l'API : https://bilemo.alexandremanteaux.fr/api/doc
 
 ## Bibliothèques utilisées:
 - Symfony lts 4.4.7

@@ -7,6 +7,10 @@ use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 
+/**
+ *  Creates a "BEARER" cookie wich contains JWT token informations when authentification is successfull
+ * 
+ */
 class JWTSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
@@ -22,7 +26,7 @@ class JWTSubscriber implements EventSubscriberInterface
         if (isset($eventData['token'])) {
             $response = $event->getResponse();
             $jwt = $eventData['token'];
-            $response->headers->setCookie(new Cookie("BEARER", $jwt, new \DateTime("+1 day"), "/", null, true, true, false, 'strict'));
+            $response->headers->setCookie(new Cookie("BEARER", $jwt, new \DateTime("+1 hour"), "/", null, true, true, false, 'strict'));
         }
    }
 }

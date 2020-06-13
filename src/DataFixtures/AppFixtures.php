@@ -390,7 +390,6 @@ class AppFixtures extends Fixture
                    ->setLastname($faker->lastName)
                    ->setCompany($faker->company)
                    ->setEmail($faker->email)
-                   ->setCompany($faker->company)
                    ->setRegisteredAt($faker->dateTimeThisYear())
                    ;
 
@@ -409,6 +408,31 @@ class AppFixtures extends Fixture
 
             $manager->persist($client);
         }
+
+        //  Add an unique client with his fake customers
+        $client = new Client();
+        $client->setUsername("alex")
+               ->setPassword($encoder->encodePassword($client, 'password'))
+               ->setFirstname("Alex")
+               ->setLastname("Manteaux")
+               ->setCompany("AlexDev")
+               ->setEmail("alexdev06@gmail.com")
+               ->setRegisteredAt($faker->dateTimeThisYear())
+                   ;
+        for ($k = 0; $k < 10; $k++) {
+            $customer = new Customer;
+            $customer->setFirstname($faker->firstName)
+                     ->setLastname($faker->lastName)
+                     ->setEmail($faker->email)
+                     ->setPassword($faker->password())
+                     ->setRegisteredAt($faker->dateTimeThisMonth())
+                     ->setClient($client)
+                     ;
+                    
+            $manager->persist($customer);
+        }
+
+        $manager->persist($client);
 
         $manager->flush();
     }

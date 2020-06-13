@@ -35,6 +35,7 @@ class Phone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"detail", "list"})
      * @SWG\Property(description="The identifier of a phone")
      * 
      */
