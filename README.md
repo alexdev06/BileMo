@@ -47,3 +47,10 @@
 9. Lire la documentation sur `api/doc`
 
 10. En cas de bugs, vider les cachez avec les commandes `php bin/console cache:clear` et `php bin/console cache:clear --env=prod`
+
+## Pour tester l'API :
+Faire une requête "POST" sur https://bilemo.alexandremanteaux.fr/api/login avec dans le body un objet JSON : {
+  "username": "alex",
+  "password": "password"
+}
+En réponse, vous obtiendrez un token JWT et un cookie contenant ce token à utiliser pour vous authentifier à chacune de vos requêtes.
