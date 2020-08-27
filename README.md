@@ -6,7 +6,7 @@
 ### Lien de login de l'API : https://bilemo.alexandremanteaux.fr/api/login (requête à faire en "POST" avec des datas JSON cf documentation)
 ### Lien vers la documentation de l'API : https://bilemo.alexandremanteaux.fr/api/doc
 
-## Bibliothèques utilisées:
+## Bibliothèques utilisées :
 - Symfony lts 4.4.7
 - fzaninotto/faker 1.9.1
 - symfony/apache-pack 1.0
@@ -22,31 +22,31 @@
 
 2. Installer les bibliothèques avec la commande `composer install`
 
-3. Modifier les variables d'environnement dans le fichier .env: 
-    * Configurer votre base de données avec son nom et les informations de connexion dans la section `doctrine/doctrine-bundle`:
+3. Modifier les variables d'environnement dans le fichier .env : 
+    * Configurer votre base de données avec son nom et les informations de connexion dans la section `doctrine/doctrine-bundle` :
       * Version du server
       * Login
       * Mot de passe
       * Nom de la base de données
-    * Mettre en version de dev(développemnent) ou prod(production)dans la section`symfony/framework-bundle `
+    * Mettre en version de dev (développemnent) ou prod (production)dans la section`symfony/framework-bundle`
     
-4. Pour créer la base de données avec la commande : `php bin/console doctrine:database:create`
+4. Pour créer la base de données : `php bin/console doctrine:database:create`
 
-5. Pour installer les tables de données via le système de migrations: `php bin/console doctrine:migrations:migrate`
+5. Pour installer les tables de données via le système de migrations : `php bin/console doctrine:migrations:migrate`
 
 6. Installer un jeu de données : `php bin/console doctrine:fixtures:load`
 
-7. Installer les clés de chiffrement avec OpenSSL: <br />
-  * `mkdir -p config/jwt`<br />
+7. Installer les clés de chiffrement avec OpenSSL: <br>
+  * `mkdir -p config/jwt`<br>
   * `openssl genrsa -out config/jwt/private.pem -aes256 4096`
   * `openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem`
   * Il va vous demander de saisir une passphrase: renseignez là ensuite dans le fichier `.env` dans `JWT_PASSPHRASE=...`
 
-8. Démarrer le server de Symfony avec la commande `symfony server:start`
+8. Démarrer le serveur de Symfony avec la commande `symfony server:start`
 
 9. Lire la documentation sur `api/doc`
 
-10. En cas de bugs, vider les cachez avec les commandes `php bin/console cache:clear` et `php bin/console cache:clear --env=prod`
+10. En cas de bugs, vider les caches avec les commandes `php bin/console cache:clear` et `php bin/console cache:clear --env=prod`
 
 ## Pour tester l'API :
 Faire une requête "POST" sur https://bilemo.alexandremanteaux.fr/api/login avec dans le body un objet JSON : {
